@@ -1,0 +1,38 @@
+name: Update CurseForge stats
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/update-curseforge.mjs"
+      - ".github/workflows/update-curseforge.yml"
+      - "index.html"
+      - "script.js"
+      - "stats.html"
+      - "stats.js"
+      - "style.css"
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch public CurseForge profile stats
+        run: node scripts/update-curseforge.mjs
+      - name: Commit updated stats
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/curseforge.json
+          if git diff --cached --quiet; then
+            echo "No stats changes."
+          else
+            git commit -m "chore: update CurseForge stats"
+            git push
+          fi

@@ -3,3 +3,26 @@ const tabButtons=[...document.querySelectorAll(".nav-tab")],panels=[...document.
 const revealTargets=[...document.querySelectorAll(".page-heading,.project,.skill-group,.creator-card,.contact-panel,.home-bottom")];
 if("IntersectionObserver"in window){const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");revealObserver.unobserve(entry.target)}}),{threshold:.12});revealTargets.forEach(el=>{el.classList.add("reveal-ready");revealObserver.observe(el)})}
 document.querySelectorAll(".nav-tab,.filter-btn,.btn").forEach(el=>{el.addEventListener("pointerdown",()=>{el.classList.remove("tap-pop");void el.offsetWidth;el.classList.add("tap-pop")})});
+
+
+/* Aqua pixel cursor trail — disabled on touch devices and reduced-motion setups. */
+(function(){
+ const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ const fine=window.matchMedia&&window.matchMedia("(pointer: fine)").matches;
+ if(reduce||!fine)return;
+ const aura=document.createElement("div");aura.className="cursor-aura";document.body.appendChild(aura);
+ let last=0;
+ window.addEventListener("pointermove",e=>{
+  if(e.pointerType!=="mouse")return;
+  aura.style.transform="translate3d("+(e.clientX-135)+"px,"+(e.clientY-135)+"px,0)";
+  aura.classList.add("is-active");
+  const now=performance.now();if(now-last<22)return;last=now;
+  for(let i=0;i<2;i++){
+   const p=document.createElement("i");p.className="cursor-pixel";
+   const size=3+Math.random()*5,dx=(Math.random()-.5)*46,dy=(Math.random()-.5)*46;
+   p.style.left=e.clientX+"px";p.style.top=e.clientY+"px";p.style.setProperty("--size",size+"px");p.style.setProperty("--dx",dx+"px");p.style.setProperty("--dy",dy+"px");
+   document.body.appendChild(p);p.addEventListener("animationend",()=>p.remove(),{once:true});
+  }
+ },{passive:true});
+ window.addEventListener("pointerleave",()=>aura.classList.remove("is-active"));
+})();

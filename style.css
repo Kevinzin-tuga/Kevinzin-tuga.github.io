@@ -142,3 +142,7 @@ body:after{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;o
 .btn:hover:after{left:125%}
 @media(hover:none),(pointer:coarse){.cursor-aura,.cursor-pixel{display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body:before,body:after,.pixel-field:before,.cursor-pixel,.cursor-aura{animation:none!important;transition:none!important}.btn:after{display:none}}
+
+
+/* Strict monochrome pass: preserve every existing layout and animation. */
+html{filter:grayscale(1)}

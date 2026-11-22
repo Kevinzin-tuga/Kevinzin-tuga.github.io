@@ -5,7 +5,7 @@ const projectUrl = "https://www.curseforge.com/minecraft/mc-mods/autoloot-select
 const headers = { "user-agent": "Mozilla/5.0 (compatible; KevinzinPortfolioStats/1.0)", "accept-language": "en-US,en;q=0.9" };
 async function page(url) {
   const response = await fetch(url, { headers });
-  if (!response.ok) throw new Error(\`CurseForge returned HTTP \${response.status} for \${url}\`);
+  if (!response.ok) throw new Error("CurseForge returned HTTP " + response.status + " for " + url);
   return (await response.text())
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")

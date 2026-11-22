@@ -5,7 +5,7 @@ if("IntersectionObserver"in window){const revealObserver=new IntersectionObserve
 document.querySelectorAll(".nav-tab,.filter-btn,.btn").forEach(el=>{el.addEventListener("pointerdown",()=>{el.classList.remove("tap-pop");void el.offsetWidth;el.classList.add("tap-pop")})});
 
 
-/* Aqua pixel cursor trail — disabled on touch devices and reduced-motion setups. */
+/* Monochrome pixel cursor trail — disabled on touch devices and reduced-motion setups. */
 (function(){
  const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
  const fine=window.matchMedia&&window.matchMedia("(pointer: fine)").matches;

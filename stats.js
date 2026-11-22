@@ -12,13 +12,13 @@ fetch("data/curseforge.json?"+Date.now()).then(r=>{if(!r.ok)throw Error("Dados i
   const values=history.map(x=>x.downloads),min=Math.min(...values),max=Math.max(...values),range=Math.max(1,max-min);
   const pts=values.map((v,i)=>{const x=32+i*(736/Math.max(1,values.length-1)),y=190-((v-min)/range)*145;return [x,y]});
   const line=pts.map(p=>p.join(",")).join(" "),area="M "+pts[0].join(" ")+" L "+pts.slice(1).map(p=>p.join(" ")).join(" L ")+" L 768 218 L 32 218 Z";
-  chart.innerHTML='<svg viewBox="0 0 800 245" role="img" aria-label="Histórico de downloads"><defs><linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#d9f2f6" stop-opacity=".32"/><stop offset="1" stop-color="#d9f2f6" stop-opacity="0"/></linearGradient></defs><path d="'+area+'" fill="url(#chartFill)"/><polyline points="'+line+'" fill="none" stroke="#d9f2f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+pts.map(p=>'<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4" fill="#e9f8fa"/>').join("")+'</svg>';
+  chart.innerHTML='<svg viewBox="0 0 800 245" role="img" aria-label="Histórico de downloads"><defs><linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#555555" stop-opacity=".32"/><stop offset="1" stop-color="#555555" stop-opacity="0"/></linearGradient></defs><path d="'+area+'" fill="url(#chartFill)"/><polyline points="'+line+'" fill="none" stroke="#555555" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+pts.map(p=>'<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4" fill="#222222"/>').join("")+'</svg>';
  }else if(history.length===1){chart.textContent="Primeiro registo: "+fmt(history[0].downloads)+" downloads em "+history[0].date+". O gráfico vai mostrar a evolução quando existirem novas sincronizações."}
  else{chart.textContent="Ainda não existem registos históricos. Aguardar pela primeira sincronização."}
 }).catch(()=>{document.querySelectorAll("#total-downloads,#total-followers,#total-projects,#autoloot-downloads,#last-update").forEach(el=>el.textContent="—");const s=document.getElementById("sync-status");if(s)s.textContent="Dados temporariamente indisponíveis";});
 
 
-/* Aqua pixel cursor trail — disabled on touch devices and reduced-motion setups. */
+/* Monochrome pixel cursor trail — disabled on touch devices and reduced-motion setups. */
 (function(){
  const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
  const fine=window.matchMedia&&window.matchMedia("(pointer: fine)").matches;

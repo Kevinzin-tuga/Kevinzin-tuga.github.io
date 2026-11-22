@@ -271,3 +271,16 @@ footer,.creator-stats,.creator-stats>div{border-color:#414141}
 .cursor-pixel{background:#fff;box-shadow:0 0 10px #ffffffbf,0 0 22px #ffffff52}
 .cursor-pixel:nth-child(3n){background:#fff}
 .skill-icons .skill-project-icon svg{width:23px;height:23px;display:block;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
+
+/* Performance pass */
+html{scroll-behavior:auto}body{background-attachment:scroll!important}
+body:before,body:after,.pixel-field,.pixel-field:before,.pixel-field:after{animation:none!important;transform:none!important}
+.pixel-field{opacity:.16!important;mix-blend-mode:normal!important}
+.project,.skill-group,.creator-card,.stats-panel,.metric-card,.home-feature,.cf-info-card,header,.contact-panel{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.project,.skill-group,.creator-card,.metric-card,.stats-panel,.home-feature,.cf-info-card,.btn,.nav-tab,.filter-btn,.project-icon,.avatar-image{transition:transform .16s ease,border-color .16s ease,background-color .16s ease,box-shadow .16s ease!important}
+.project:hover,.skill-group:hover,.creator-card:hover,.metric-card:hover,.stats-panel:hover,.home-feature:hover,.cf-info-card:hover{transform:translateY(-2px)!important}
+.project-icon,.skill-project-icon{transform:none!important;transition:none!important}
+.reveal-ready,.reveal-ready.is-visible{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+.cursor-aura,.cursor-pixel{display:none!important}
+.discord-btn,.creator-cube,.creator-cube i,.avatar-orbit,.avatar-orbit:before{animation:none!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}

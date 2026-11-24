@@ -1,12 +1,12 @@
 const fmt=n=>n==null?"—":new Intl.NumberFormat("pt-PT").format(n);
-const dateFmt=v=>new Intl.DateTimeFormat("pt-PT",{dateStyle:"medium",timeStyle:"short"}).format(new Date(v));
+const dateFmt=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?"Sem dados":new Intl.DateTimeFormat("pt-PT",{dateStyle:"medium",timeStyle:"short"}).format(d)};
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const year=document.querySelector("#year");if(year)year.textContent=new Date().getFullYear();
 function renderDownloadsChart(history){
  const chart=document.getElementById("downloads-chart");
  const caption=document.getElementById("chart-caption");
  if(!chart)return;
- const rows=history.filter(x=>Number.isFinite(Number(x.downloads))&&x.date).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+ const rows=history.filter(x=>x&&x.downloads!==null&&x.downloads!==undefined&&x.downloads!==""&&Number.isFinite(Number(x.downloads))&&typeof x.date==="string"&&x.date.trim()).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
  if(!rows.length){chart.innerHTML='<div class="chart-empty"><span class="chart-empty-icon">↗</span><strong>O histórico está a começar</strong><small>Quando forem guardadas sincronizações, a evolução aparecerá aqui.</small></div>';if(caption)caption.textContent="Ainda não existem dados históricos suficientes para desenhar a evolução.";return;}
  if(rows.length===1){chart.innerHTML='<div class="chart-single"><span class="chart-single-label">PRIMEIRO REGISTO</span><strong>'+fmt(rows[0].downloads)+'</strong><span>downloads · '+esc(rows[0].date)+'</span><small>O gráfico ganha uma linha de evolução assim que existir uma segunda sincronização.</small></div>';if(caption)caption.textContent="Este é o primeiro ponto guardado. Os próximos registos vão construir a linha de evolução.";return;}
  const values=rows.map(x=>Number(x.downloads));
@@ -35,7 +35,7 @@ fetch("data/curseforge.json?"+Date.now()).then(r=>{if(!r.ok)throw Error("Dados i
  const set=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value};
  set("total-downloads",fmt(d.downloads));set("total-followers",fmt(d.followers));set("total-projects",fmt(d.projects));set("autoloot-downloads",fmt(d.autolootDownloads));
  const updated=d.updatedAt?dateFmt(d.updatedAt):"Sem dados";set("last-update",updated);set("sync-status",updated);set("followers-source",d.followers==null?"INDISPONÍVEL":"PÚBLICO");
- const history=Array.isArray(d.history)?d.history.filter(x=>Number.isFinite(Number(x.downloads))):[];
+ const history=Array.isArray(d.history)?d.history.filter(x=>x&&x.downloads!==null&&x.downloads!==undefined&&x.downloads!==""&&Number.isFinite(Number(x.downloads))&&typeof x.date==="string"&&x.date.trim()):[];
  set("history-range",history.length+" registo"+(history.length===1?"":"s")+" guardado"+(history.length===1?"":"s"));
  renderDownloadsChart(history);
 }).catch(()=>{

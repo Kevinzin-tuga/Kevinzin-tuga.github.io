@@ -290,3 +290,27 @@ body:before,body:after,.pixel-field,.pixel-field:before,.pixel-field:after{anima
 }
 .projects-bottom .text-link:hover{text-decoration:underline}
 .projects-bottom a.text-link{color:#eee!important}
+
+
+/* Final stability and accessibility pass */
+html { scroll-behavior: auto; }
+body { overflow-x: clip; }
+header { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+.project,.skill-group,.creator-card,.stats-panel,.metric-card,.home-feature,
+.cf-info-card,header,.contact-panel,.btn,.nav-tab,.filter-btn,
+.project-icon,.avatar-image,.avatar-orbit,.status-pill {
+  will-change: auto !important;
+}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible {
+  outline: 2px solid #f2f2f2;
+  outline-offset: 4px;
+}
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

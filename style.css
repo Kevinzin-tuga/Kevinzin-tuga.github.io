@@ -115,19 +115,13 @@ body:after{opacity:.24;background:radial-gradient(circle at 18% 32%,#d9f2f61b 0 
 @media(max-width:760px){.home-extra{grid-template-columns:1fr}.cf-lower-grid{grid-template-columns:1fr}.creator-cube{right:7%;width:78px;height:78px;opacity:.45}.creator-banner{min-height:280px}.home-feature{padding:19px}}
 @media(prefers-reduced-motion:reduce){body:before,body:after,.creator-cube,.creator-cube i{animation:none!important}.home-feature,.cf-info-card{transition:none}}
 
-/* ===== Interactive atmosphere & cursor trail ===== */
-:root{--trail:#03fcd7;--trail-soft:#8cf7e6}
+
 html{scroll-behavior:smooth}
 body{position:relative;isolation:isolate;background-color:#070d0e;background-image:radial-gradient(ellipse at 12% 12%,#03fcd719 0,transparent 34%),radial-gradient(ellipse at 88% 34%,#0d80742b 0,transparent 33%),radial-gradient(ellipse at 50% 100%,#123c383d 0,transparent 48%),linear-gradient(145deg,#070d0e 0%,#0b1717 48%,#071011 100%);background-attachment:fixed}
 body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.34;background-image:linear-gradient(90deg,#8cf7e60b 1px,transparent 1px),linear-gradient(#8cf7e60b 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 38%,#000 12%,transparent 82%);animation:ambient-grid 36s linear infinite}
 body:after{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;opacity:.3;background:radial-gradient(circle at 20% 30%,#03fcd72a 0 1px,transparent 2px),radial-gradient(circle at 70% 68%,#8cf7e62b 0 2px,transparent 3px),radial-gradient(circle at 46% 84%,#d8fff51c 0 1px,transparent 2px);background-size:180px 180px,260px 260px,130px 130px;animation:ambient-particles 42s linear infinite}
 .pixel-field{opacity:.5;mix-blend-mode:screen}
 .pixel-field:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 20%,#03fcd70b 43%,transparent 60%),radial-gradient(ellipse at 50% 0%,#03fcd712,transparent 55%);animation:ambient-bloom 13s ease-in-out infinite alternate}
-.cursor-aura{position:fixed;left:0;top:0;width:270px;height:270px;border-radius:50%;pointer-events:none;z-index:30;opacity:0;transform:translate(-50%,-50%);background:radial-gradient(circle,#03fcd71c 0%,#03fcd709 30%,transparent 70%);mix-blend-mode:screen;transition:opacity .25s}
-.cursor-aura.is-active{opacity:1}
-.cursor-pixel{position:fixed;left:0;top:0;width:var(--size,5px);height:var(--size,5px);pointer-events:none;z-index:31;background:var(--trail-soft);border-radius:1px;box-shadow:0 0 10px #03fcd7a6,0 0 22px #03fcd74d;transform:translate(-50%,-50%) rotate(45deg);animation:pixel-trail .72s cubic-bezier(.16,.75,.3,1) forwards}
-.cursor-pixel:nth-child(3n){background:#03fcd7;border-radius:0}
-@keyframes pixel-trail{0%{opacity:.95;transform:translate(-50%,-50%) scale(1) rotate(0)}65%{opacity:.7}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.08) rotate(130deg)}}
 @keyframes ambient-grid{to{background-position:56px 56px,56px 56px}}
 @keyframes ambient-particles{from{background-position:0 0,0 0,0 0}to{background-position:180px -180px,-260px 260px,130px -130px}}
 @keyframes ambient-bloom{from{opacity:.35;transform:translate3d(-2%,0,0)}to{opacity:1;transform:translate3d(2%,1%,0)}}
@@ -140,8 +134,6 @@ body:after{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;o
 .btn{position:relative;overflow:hidden}
 .btn:after{content:"";position:absolute;inset:-40% auto -40% -45%;width:30%;background:#ffffff55;transform:skewX(-24deg);transition:left .65s}
 .btn:hover:after{left:125%}
-@media(hover:none),(pointer:coarse){.cursor-aura,.cursor-pixel{display:none}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body:before,body:after,.pixel-field:before,.cursor-pixel,.cursor-aura{animation:none!important;transition:none!important}.btn:after{display:none}}
 
 
 /* Monochrome palette without desaturating the home avatar image. */
@@ -150,14 +142,11 @@ html{filter:none}
 
 /* Requested fixes: white cursor and project-style monochrome skill icons.
    Deliberately leaves all background, grid, particle and animation rules untouched. */
-.cursor-aura{
   background:radial-gradient(circle,rgba(255,255,255,.12) 0%,rgba(255,255,255,.045) 30%,transparent 70%);
 }
-.cursor-pixel{
   background:#fff;
   box-shadow:0 0 10px rgba(255,255,255,.75),0 0 22px rgba(255,255,255,.32);
 }
-.cursor-pixel:nth-child(3n){background:#fff}
 .skill-icons{align-items:flex-start;gap:16px}
 .skill-icons .skill-item{
   min-width:66px;
@@ -267,9 +256,6 @@ footer,.creator-stats,.creator-stats>div{border-color:#414141}
 .foot>span,.projects-bottom{color:#aaa}
 .creator-stats strong{color:#eee}
 .server-title span{color:#ddd}
-.cursor-aura{background:radial-gradient(circle,rgba(255,255,255,.12) 0%,rgba(255,255,255,.045) 30%,transparent 70%)}
-.cursor-pixel{background:#fff;box-shadow:0 0 10px #ffffffbf,0 0 22px #ffffff52}
-.cursor-pixel:nth-child(3n){background:#fff}
 .skill-icons .skill-project-icon svg{width:23px;height:23px;display:block;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
 
 /* Performance pass */
@@ -281,6 +267,5 @@ body:before,body:after,.pixel-field,.pixel-field:before,.pixel-field:after{anima
 .project:hover,.skill-group:hover,.creator-card:hover,.metric-card:hover,.stats-panel:hover,.home-feature:hover,.cf-info-card:hover{transform:translateY(-2px)!important}
 .project-icon,.skill-project-icon{transform:none!important;transition:none!important}
 .reveal-ready,.reveal-ready.is-visible{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
-.cursor-aura,.cursor-pixel{display:none!important}
 .discord-btn,.creator-cube,.creator-cube i,.avatar-orbit,.avatar-orbit:before{animation:none!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}

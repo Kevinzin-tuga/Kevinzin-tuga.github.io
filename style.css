@@ -314,3 +314,13 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* Separate email contact card */
+.email-contact{position:relative;z-index:1;display:flex;align-items:flex-start;gap:18px;width:min(100%,560px);margin-top:34px;padding:22px 24px;border:1px solid #555;border-radius:18px;background:linear-gradient(145deg,#ffffff0d,#ffffff04)}
+.email-icon{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border:1px solid #777;border-radius:13px;background:#ffffff0b;color:#eee;font-size:21px}
+.email-copy small{font: .62rem var(--mono);letter-spacing:.12em;color:#aaa}
+.email-copy h3{font-size:1rem;margin:4px 0 3px;color:#f1f1f1}
+.email-copy p{font-size:.76rem;color:#aaa;margin-bottom:9px}
+.email-copy a{font: .75rem var(--mono);color:#eee;text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+@media(max-width:600px){.email-contact{padding:18px;gap:13px}}

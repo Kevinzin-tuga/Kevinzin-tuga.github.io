@@ -269,3 +269,24 @@ body:before,body:after,.pixel-field,.pixel-field:before,.pixel-field:after{anima
 .reveal-ready,.reveal-ready.is-visible{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
 .discord-btn,.creator-cube,.creator-cube i,.avatar-orbit,.avatar-orbit:before{animation:none!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+
+/* CurseForge cards: restore crisp outlined SVG icons. */
+.cf-card-icon svg{
+ width:24px;height:24px;display:block;
+ fill:none;stroke:currentColor;stroke-width:1.7;
+ stroke-linecap:round;stroke-linejoin:round;
+}
+.cf-card-icon svg [fill="currentColor"]{fill:currentColor;stroke:none}
+
+/* Projects footer: make the category button look and behave like its text link. */
+.projects-bottom .text-link{
+ appearance:none;-webkit-appearance:none;
+ display:inline;background:transparent!important;
+ border:0!important;border-radius:0!important;
+ padding:0!important;margin:0!important;
+ color:#eee!important;font:inherit;font-size:.72rem;
+ line-height:inherit;box-shadow:none!important;
+}
+.projects-bottom .text-link:hover{text-decoration:underline}
+.projects-bottom a.text-link{color:#eee!important}

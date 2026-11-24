@@ -1,5 +1,119 @@
-const tabButtons=[...document.querySelectorAll(".nav-tab")],panels=[...document.querySelectorAll(".tab-panel")];function openTab(name){tabButtons.forEach(b=>{const active=b.dataset.tab===name;b.classList.toggle("active",active);b.setAttribute("aria-selected",String(active))});panels.forEach(p=>{const active=p.id==="tab-"+name;p.hidden=!active;p.classList.toggle("active",active)});document.querySelector(".nav-right").classList.remove("open");document.querySelector("#mobile-menu").setAttribute("aria-expanded","false");history.replaceState(null,"","#"+name)}tabButtons.forEach(b=>b.addEventListener("click",()=>openTab(b.dataset.tab)));document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>openTab(b.dataset.go)));document.querySelectorAll("[data-tab-link]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();openTab(a.dataset.tabLink)}));const initial=location.hash.slice(1);if(tabButtons.some(b=>b.dataset.tab===initial))openTab(initial);const menu=document.querySelector("#mobile-menu"),nav=document.querySelector(".nav-right");menu.addEventListener("click",()=>{const open=nav.classList.toggle("open");menu.setAttribute("aria-expanded",String(open))});document.querySelector("#ano").textContent=new Date().getFullYear();const filterButtons=[...document.querySelectorAll("[data-filter]")],cards=[...document.querySelectorAll(".project[data-category]")],empty=document.querySelector("#filter-empty");filterButtons.forEach(b=>b.addEventListener("click",()=>{filterButtons.forEach(x=>{x.classList.toggle("active",x===b);x.setAttribute("aria-pressed",String(x===b))});let shown=0;cards.forEach(c=>{const visible=b.dataset.filter==="all"||c.dataset.category===b.dataset.filter;c.hidden=!visible;if(visible)shown++});empty.hidden=shown!==0}));const fmt=n=>n==null?"—":new Intl.NumberFormat("pt-PT").format(n);fetch("data/curseforge.json?"+Date.now()).then(r=>{if(!r.ok)throw Error();return r.json()}).then(d=>{document.querySelector("#cf-followers").textContent=fmt(d.followers);document.querySelector("#cf-downloads").textContent=fmt(d.downloads);document.querySelector("#cf-projects").textContent=fmt(d.projects);const t=d.updatedAt?new Date(d.updatedAt):null;document.querySelector("#cf-updated").textContent=t?"Atualizado "+new Intl.DateTimeFormat("pt-PT",{dateStyle:"medium",timeStyle:"short"}).format(t):"Dados ainda não disponíveis"}).catch(()=>document.querySelector("#cf-updated").textContent="À espera da primeira sincronização");const titleText="_Kevinzin_tuga_";let titleIndex=1,erasing=false;function animateTitle(){document.title=titleText.slice(0,titleIndex);if(!erasing){if(titleIndex<titleText.length){titleIndex++;setTimeout(animateTitle,240)}else{erasing=true;setTimeout(animateTitle,1100)}}else if(titleIndex>1){titleIndex--;setTimeout(animateTitle,130)}else{erasing=false;setTimeout(animateTitle,550)}}setTimeout(animateTitle,600);
-/* Small motion details: reveal cards when their tab becomes visible. */
-const revealTargets=[...document.querySelectorAll(".page-heading,.project,.skill-group,.creator-card,.contact-panel,.home-bottom")];
-if("IntersectionObserver"in window){const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");revealObserver.unobserve(entry.target)}}),{threshold:.12});revealTargets.forEach(el=>{el.classList.add("reveal-ready");revealObserver.observe(el)})}
-document.querySelectorAll(".nav-tab,.filter-btn,.btn").forEach(el=>{el.addEventListener("pointerdown",()=>{el.classList.remove("tap-pop");void el.offsetWidth;el.classList.add("tap-pop")})});
+(() => {
+  "use strict";
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const numberFormat = new Intl.NumberFormat("pt-PT");
+  const formatNumber = value =>
+    value === null || value === undefined || value === "" || !Number.isFinite(Number(value))
+      ? "—"
+      : numberFormat.format(Number(value));
+
+  const tabButtons = $$(".nav-tab");
+  const panels = $$(".tab-panel");
+  const nav = $(".nav-right");
+  const menu = $("#mobile-menu");
+
+  function openTab(name) {
+    const valid = tabButtons.some(button => button.dataset.tab === name);
+    if (!valid) return;
+
+    tabButtons.forEach(button => {
+      const active = button.dataset.tab === name;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-selected", String(active));
+    });
+
+    panels.forEach(panel => {
+      const active = panel.id === "tab-" + name;
+      panel.hidden = !active;
+      panel.classList.toggle("active", active);
+    });
+
+    nav?.classList.remove("open");
+    menu?.setAttribute("aria-expanded", "false");
+    if (location.hash !== "#" + name) history.replaceState(null, "", "#" + name);
+  }
+
+  tabButtons.forEach(button =>
+    button.addEventListener("click", () => openTab(button.dataset.tab))
+  );
+
+  $$("[data-go]").forEach(button =>
+    button.addEventListener("click", () => openTab(button.dataset.go))
+  );
+
+  $$("[data-tab-link]").forEach(link =>
+    link.addEventListener("click", event => {
+      event.preventDefault();
+      openTab(link.dataset.tabLink);
+    })
+  );
+
+  const initialTab = location.hash.slice(1);
+  if (tabButtons.some(button => button.dataset.tab === initialTab)) {
+    openTab(initialTab);
+  }
+
+  menu?.addEventListener("click", () => {
+    const expanded = nav?.classList.toggle("open") ?? false;
+    menu.setAttribute("aria-expanded", String(expanded));
+  });
+
+  const year = $("#ano");
+  if (year) year.textContent = String(new Date().getFullYear());
+
+  const filterButtons = $$("[data-filter]");
+  const projectCards = $$(".project[data-category]");
+  const emptyMessage = $("#filter-empty");
+
+  filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      filterButtons.forEach(item => {
+        const active = item === button;
+        item.classList.toggle("active", active);
+        item.setAttribute("aria-pressed", String(active));
+      });
+
+      let visibleCount = 0;
+      projectCards.forEach(card => {
+        const visible =
+          button.dataset.filter === "all" ||
+          card.dataset.category === button.dataset.filter;
+        card.hidden = !visible;
+        if (visible) visibleCount++;
+      });
+
+      if (emptyMessage) emptyMessage.hidden = visibleCount !== 0;
+    });
+  });
+
+  const setText = (selector, value) => {
+    const element = $(selector);
+    if (element) element.textContent = value;
+  };
+
+  fetch("data/curseforge.json", { cache: "no-store" })
+    .then(response => {
+      if (!response.ok) throw new Error("Não foi possível carregar os dados.");
+      return response.json();
+    })
+    .then(data => {
+      setText("#cf-followers", formatNumber(data.followers));
+      setText("#cf-downloads", formatNumber(data.downloads));
+      setText("#cf-projects", formatNumber(data.projects));
+
+      const updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
+      const validDate = updatedAt && !Number.isNaN(updatedAt.getTime());
+      setText(
+        "#cf-updated",
+        validDate
+          ? "Atualizado " + new Intl.DateTimeFormat("pt-PT", {
+              dateStyle: "medium",
+              timeStyle: "short"
+            }).format(updatedAt)
+          : "Dados ainda não disponíveis"
+      );
+    })
+    .catch(() => setText("#cf-updated", "Dados temporariamente indisponíveis"));
+})();

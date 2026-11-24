@@ -324,3 +324,41 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible {
 .email-copy p{font-size:.76rem;color:#aaa;margin-bottom:9px}
 .email-copy a{font: .75rem var(--mono);color:#eee;text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
 @media(max-width:600px){.email-contact{padding:18px;gap:13px}}
+
+
+/* Lightweight interactions: transform + opacity only, no blur or infinite effects. */
+@keyframes soft-enter {
+  from { opacity: 0; transform: translateY(9px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.tab-panel.active { animation: soft-enter .24s ease-out both; }
+.project,.skill-group,.creator-card,.home-feature,.cf-info-card,.contact-panel,.email-contact {
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease !important;
+}
+.project:not(.disabled):hover,.skill-group:hover,.creator-card:hover,
+.home-feature:hover,.cf-info-card:hover,.email-contact:hover {
+  transform: translateY(-3px) !important;
+  border-color: #aaa;
+}
+.project-icon,.cf-card-icon,.email-icon {
+  transition: transform .18s ease, background-color .18s ease !important;
+}
+.project:not(.disabled):hover .project-icon,
+.cf-info-card:hover .cf-card-icon,
+.email-contact:hover .email-icon {
+  transform: translateY(-2px);
+  background-color: #ffffff1c;
+}
+.btn,.nav-tab,.filter-btn,.text-link,.email-copy a {
+  transition: transform .16s ease, color .16s ease, background-color .16s ease,
+    border-color .16s ease, box-shadow .16s ease !important;
+}
+.btn:active,.filter-btn:active { transform: scale(.97); }
+.nav-tab:hover,.text-link:hover,.email-copy a:hover { transform: translateY(-1px); }
+.discord-btn { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .tab-panel.active { animation: none !important; }
+  .project,.skill-group,.creator-card,.home-feature,.cf-info-card,.contact-panel,
+  .email-contact,.project-icon,.cf-card-icon,.email-icon,.btn,.nav-tab,.filter-btn,
+  .text-link,.email-copy a { transition: none !important; }
+}

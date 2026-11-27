@@ -1,11 +1,11 @@
 {
   "username": "_Kevinzin_tuga_",
   "profileUrl": "https://www.curseforge.com/members/_kevinzin_tuga_/projects",
-  "downloads": 108,
+  "downloads": 110,
   "followers": 0,
   "projects": 1,
-  "autolootDownloads": 108,
-  "updatedAt": "2026-11-26T13:34:04.025Z",
+  "autolootDownloads": 110,
+  "updatedAt": "2026-11-27T01:32:07.942Z",
   "history": [
     {
       "date": "2026-11-22",
@@ -24,6 +24,12 @@
       "downloads": 108,
       "followers": 0,
       "projects": null
+    },
+    {
+      "date": "2026-11-27",
+      "downloads": 110,
+      "followers": 0,
+      "projects": 1
     }
   ]
 }
